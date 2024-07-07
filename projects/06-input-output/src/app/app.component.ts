@@ -11,11 +11,16 @@ import { ListingComponent } from './listing/listing.component';
     <section class="container">
       <!-- This article element represents and entire listing -->
        @for (carEntry of carList; track carEntry) {
-        <app-listing [car]="carEntry"/>
+        <app-listing [car]="carEntry" (carSaved)="addCarToSaved($event)"/>
        } @empty {
         <p>No cars avaiable</p>
        }
-      <!-- end car listing markup -->
+       <!-- end car listing markup -->
+       @for (carEntry of savedCarList; track carEntry) {
+        <p>{{ carEntry.make }} {{ carEntry.model }}</p>
+       } @empty {
+        <p>No cars saved</p>
+       }
     </section>
   `,
   styles: [],
@@ -56,4 +61,7 @@ export class AppComponent {
       transmission: 'Automatic',
     },
   ];
+  addCarToSaved(car: Car){
+    this.savedCarList.push(car);
+  };
 }
